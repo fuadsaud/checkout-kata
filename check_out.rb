@@ -26,12 +26,9 @@ class ModPrice
   end
 
   def call(goods)
-    goods
-      .count { |g| g == sku }
-      .divmod(quantity)
-      .zip([special_price, regular_price])
-      .map { |(q, p)| q * p }
-      .reduce(&:+)
+    count = goods.count { |g| g == sku }
+    d, m = count.divmod(quantity)
+    d * special_price + m * regular_price
   end
 
   private
